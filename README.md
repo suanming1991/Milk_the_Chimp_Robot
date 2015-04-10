@@ -19,12 +19,12 @@ follower should hit the brakes and buzzes the piezo buzzer.
 
 ## Modules
 
-Each of **sheetsee.js**'s features are divided into modules. Use just the parts you need; see docs on [building](./docs/building.md). If you don't want to build your own, you can just use the full library which includes all modules, it's [here on GitHub](http://www.github.com/jlord/sheetsee.js).
+The system is divided into several modules. The description of each is listed below.
 
 
 | Module              | Contains                                                                                            | Docs                         |
 | ------------------- | --------------------------------------------------------------------------------------------------- | ---------------------------- |
-| **sheetsee-core**   | **Included in any build**. Gets you started and has the working-with-your-data functions.           | [Doc](./docs/sheetsee-core.md)   |
+| digital core  | **Included in any build**. Gets you started and has the working-with-your-data functions.           | [Doc](./docs/sheetsee-core.md)   |
 | **sheetsee-tables** | Contains everything you'll need to create a table including sortable columns, pagination and search.| [Doc](./docs/sheetsee-tables.md) |
 | **sheetsee-maps**   | For making maps with your point, line or polygon spreadsheet data. Built on Mapbox.js.              | [Doc](./docs/sheetsee-maps.md)   |
 | **sheetsee-charts** | Includes 3 basic d3 charts: bar, line and pie. You can also [use your own](docs/custom-charts.md).  | [Doc](./docs/sheetsee-charts.md) |
