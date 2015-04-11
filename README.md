@@ -1,5 +1,5 @@
 # Milk_the_Chimp_Robot
-### Team members: Hua Shao, Shiyi Zhou, Zexi Liu
+### Team members: Hua Shao, Shiyi Zhou, and Zexi Liu
 
 This project proposes to develop the digital components of a robot that does the line following.
 
