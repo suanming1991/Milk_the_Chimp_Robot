@@ -21,7 +21,7 @@ follower should hit the brakes and buzzes the piezo buzzer.
 
 The system is divided into several modules. The description of each is listed below.
 
-
+<!---
 | Module              | Contains                                                                                            | Docs                         |
 | ------------------- | --------------------------------------------------------------------------------------------------- | ---------------------------- |
 | **Digital Core**    | **Included in any build**. Gets you started and has the working-with-your-data functions.           | [Doc](./docs/sheetsee-core.md)   |
@@ -29,22 +29,51 @@ The system is divided into several modules. The description of each is listed be
 | **Barcode Reader**  | For making maps with your point, line or polygon spreadsheet data. Built on Mapbox.js.              | [Doc](./docs/sheetsee-maps.md)   |
 | **UART**  | Includes 3 basic d3 charts: bar, line and pie. You can also [use your own](docs/custom-charts.md).  | [Doc](./docs/sheetsee-charts.md) |
 | **Motor Control**   | Includes 3 basic d3 charts: bar, line and pie. You can also [use your own](docs/custom-charts.md).  | [Doc](./docs/sheetsee-charts.md) |
+-->
+
+<html>
+<head>
+<style>
+table, th, td {
+    border: 1px solid black;
+}
+</style>
+</head>
+<body>
 
 <table style="width:100%">
-<tr align="center">
-<tr>
-  <td><b>Module<b></td>
-  <td><b>Contains<b></td> 
-  <td><b>Docs<b></td>
-</tr>
-<tr>
-  <td>**Digital Core**</td>
-  <td>Core function of the robot which does major calculation/logic processing</td> 
-  <td>NA</td>
-</tr>
-<tr>
-  <td>**A2D interface**</td>
-  <td>Interface that changes analog signal to digital counterpart</td> 
-  <td>NA</td>
-</tr>
+  <tr>
+    <th>Module</th>
+    <th>Contains</th>
+    <th>Docs</th>
+  </tr>
+  <tr align="center">
+    <td>A2D interface</td>
+    <td>Interface that changes analog signal to digital counterpart</td>
+    <td>NA</td>
+  </tr>
+  <tr align="center">
+    <td>Digital Core</td>
+    <td>Core function of the robot which does major calculation/logic processing</td>
+    <td>NA</td>
+  </tr>
+  <tr align="center">
+    <td>Barcode Reader</td>
+    <td>Reader that reads the barcode at the station to stop</td>
+    <td>NA</td>
+  </tr>
+  <tr align="center">
+    <td>UART</td>
+    <td>Bluetooth UART module that receives signal from Bluegigia BLE module</td>
+    <td>NA</td>
+  </tr>
+  <tr align="center">
+    <td>Motor Control</td>
+    <td>sends out PWM signal to control motor</td>
+    <td>NA</td>
+  </tr>
 </table>
+
+</body>
+</html>
+
