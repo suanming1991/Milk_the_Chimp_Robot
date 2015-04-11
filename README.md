@@ -32,7 +32,7 @@ The system is divided into several modules. The description of each is listed be
 
 <table style="width:300px">
 <tr>
-  <td>**Module**</td>
+  <td><b>**Module**<b></td>
   <td>**Contains**</td> 
   <td>**Docs**</td>
 </tr>
