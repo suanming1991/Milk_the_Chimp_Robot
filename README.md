@@ -31,12 +31,12 @@ The system is divided into several modules. The description of each is listed be
 | **Motor Control**   | Includes 3 basic d3 charts: bar, line and pie. You can also [use your own](docs/custom-charts.md).  | [Doc](./docs/sheetsee-charts.md) |
 
 <table style="width:300px">
-<tr align="center">
 <tr>
-  <td><b>**Module**<b></td>
-  <td>**Contains**</td> 
-  <td>**Docs**</td>
+  <td><b>Module<b></td>
+  <td>Contains</td> 
+  <td>Docs</td>
 </tr>
+<tr align="center">
 <tr>
   <td>**Digital Core**</td>
   <td>Core function of the robot which does major calculation/logic processing</td> 
