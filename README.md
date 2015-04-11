@@ -32,13 +32,18 @@ The system is divided into several modules. The description of each is listed be
 
 <table style="width:300px">
 <tr>
-  <td>Jill</td>
-  <td>Smith</td> 
-  <td>50</td>
+  <td>**Module**</td>
+  <td>**Contains**</td> 
+  <td>**Docs**</td>
 </tr>
 <tr>
-  <td>Eve</td>
-  <td>Jackson</td> 
-  <td>94</td>
+  <td>**Digital Core**</td>
+  <td>Core function of the robot which does major calculation/logic processing</td> 
+  <td>NA</td>
+</tr>
+<tr>
+  <td>**A2D interface**</td>
+  <td>Interface that changes analog signal to digital counterpart</td> 
+  <td>NA</td>
 </tr>
 </table>
