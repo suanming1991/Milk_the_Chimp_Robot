@@ -34,9 +34,7 @@ The system is divided into several modules. The description of each is listed be
 <html>
 <head>
 <style>
-table, th, td {
-    border: 1px solid black;
-}
+
 </style>
 </head>
 <body>
