@@ -7,7 +7,7 @@ git config --global user.name "suanming1991"
 git config --global user.email "zliu79@wisc.edu"
 ```
 ## Create new repo:
-go to github.com and create a new repo online with <repoName>
+go to github.com and create a new repo online with ``repoName``
 ```
 cd ~
 mkdir <repoName>
