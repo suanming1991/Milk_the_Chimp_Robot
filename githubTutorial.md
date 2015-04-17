@@ -6,7 +6,6 @@ git config --global user.name "suanming1991"
 ```
 git config --global user.email "zliu79@wisc.edu"
 ```
-
 ## Create new repo:
 go to github.com and create a new repo online with <repoName>
 ```
@@ -21,7 +20,6 @@ git commit -m "<your message>"
 git remote add origin https://github.com/suanming1991/<repoName>.git
 git push origin master
 ```
-
 ##remove files
 
 ```
