@@ -23,6 +23,7 @@ follower should hit the brakes and buzzes the piezo buzzer.
 ## Modules
 
 ![Module Overview](https://github.com/suanming1991/Milk_the_Chimp_Robot/blob/master/imgs/projectOverview.PNG)
+
 The system is divided into several modules. The description of each is listed below.
 
 <!---
