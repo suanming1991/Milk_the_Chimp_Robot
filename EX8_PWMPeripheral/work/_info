@@ -1,0 +1,73 @@
+m255
+K4
+z2
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+dI:/ece551/HW2
+vPWM_architecture1
+!s110 1424712177
+!i10b 1
+!s100 e>M<?U@lc:aMHFhZaWmHn0
+Ie;8d_6E7hE^DW60R?`NP22
+Z0 V`JN@9S9cnhjKRR_L]QIcM3
+Z1 dI:/ece551/Project/EX8_PWMPeripheral
+w1424712170
+8I:/ece551/Project/EX8_PWMPeripheral/PWM_architecture1.v
+FI:/ece551/Project/EX8_PWMPeripheral/PWM_architecture1.v
+Z2 L0 14
+Z3 OE;L;10.3c;59
+r1
+!s85 0
+31
+!s108 1424712177.684000
+!s107 I:/ece551/Project/EX8_PWMPeripheral/PWM_architecture1.v|
+!s90 -reportprogress|300|-work|work|-vopt|-stats=none|I:/ece551/Project/EX8_PWMPeripheral/PWM_architecture1.v|
+!i113 0
+Z4 o-work work -L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
+n@p@w@m_architecture1
+vPWMPeripheral
+Z5 !s110 1424712118
+!i10b 1
+!s100 X8za=le5_[_XGbS?kzZfh1
+I9HYM>G[i_>hgR`c0hAFCm2
+R0
+R1
+w1424668092
+8I:/ece551/Project/EX8_PWMPeripheral/PWMPeripheral.v
+FI:/ece551/Project/EX8_PWMPeripheral/PWMPeripheral.v
+R2
+R3
+r1
+!s85 0
+31
+!s108 1424712118.313000
+!s107 I:/ece551/Project/EX8_PWMPeripheral/PWMPeripheral.v|
+!s90 -reportprogress|300|-work|work|-vopt|-stats=none|I:/ece551/Project/EX8_PWMPeripheral/PWMPeripheral.v|
+!i113 0
+R4
+n@p@w@m@peripheral
+vPWMPeripheral_tb
+R5
+!i10b 1
+!s100 E0MW93XEQ]`1za[:W?Scz1
+Ize4]e[NVngA_`Rh7d_`nA2
+R0
+R1
+w1424668107
+8I:/ece551/Project/EX8_PWMPeripheral/PWMPeripheral_tb.v
+FI:/ece551/Project/EX8_PWMPeripheral/PWMPeripheral_tb.v
+L0 1
+R3
+r1
+!s85 0
+31
+!s108 1424712118.742000
+!s107 I:/ece551/Project/EX8_PWMPeripheral/PWMPeripheral_tb.v|
+!s90 -reportprogress|300|-work|work|-vopt|-stats=none|I:/ece551/Project/EX8_PWMPeripheral/PWMPeripheral_tb.v|
+!i113 0
+R4
+n@p@w@m@peripheral_tb
