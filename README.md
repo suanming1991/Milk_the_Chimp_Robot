@@ -4,7 +4,9 @@
 This project proposes to develop the digital components of a robot that does the line following.
 
 ## Description
+
 ![The "Robot"](https://github.com/suanming1991/Milk_the_Chimp_Robot/blob/master/imgs/bottomView.PNG)
+
 An array of six IR sensors will be utilized by the A2D converter and the readings will be
 mathematically combined to form a signed error signal (Positive if too far left of the line, negative if too
 far right of the line). This error signal will be used in a PID control algorithm to determine the drive to
