@@ -1,7 +1,7 @@
 //==================================================================================================
 //  Filename      : IR_SENSOR_PI_MATH.sv
 //  Created On    : 2015-04-22 14:54:29
-//  Last Modified : 2015-04-22 23:44:13
+//  Last Modified : 2015-04-23 00:19:22
 //  Revision      : 
 //  Author        : Zexi Liu
 //  Company       : ECE Department, University of Wisconsin–Madison
@@ -27,9 +27,9 @@ module IR_SENSOR_PI_MATH (/*autoport*/
 			go,
 			cnv_cmplt);
 
-	output IR_in_en,IR_mid_en,IR_out_en;	// PWM based enables to various IR sensors
-	output strt_cnv;						// used to initiate a Round Robing conversion on IR sensors
-	output [10:0] lft,rht;				// 11-bit signed left and right motor controls
+	output logic IR_in_en,IR_mid_en,IR_out_en;	// PWM based enables to various IR sensors
+	output logic strt_cnv;						// used to initiate a Round Robing conversion on IR sensors
+	output logic [10:0] lft,rht;				// 11-bit signed left and right motor controls
 
 	input clk,rst_n;			// 50MHz clock and active low asynch reset
 	input go;	//go command from cmd processing state machine
@@ -49,7 +49,7 @@ module IR_SENSOR_PI_MATH (/*autoport*/
 	logic PWM_output;	//need to instantiate PWM8 module, this is the output
 	logic [7:0] PWM_duty_cycle;	//PWM duty cycle. Set to be a constant 0x8C
 
-	typedef enum reg [3:0] {IDLE,B,C,D,E,F,INTEGRAL,ICOMP,PCOMP,ACCUM,RHT_REG,ACCUM,LFT_REG} state_t;
+	typedef enum reg [3:0] {IDLE,B,C,D,E,F,INTEGRAL,ICOMP,PCOMP,ACCUM,RHT_REG,ACCUM2,LFT_REG} state_t;
 	state_t state, nxt_state;
 
 	always_ff @(posedge clk, negedge rst_n)
@@ -60,7 +60,6 @@ module IR_SENSOR_PI_MATH (/*autoport*/
 
 	always_comb begin : proc_grande_state_machine
 		//default values
-		chnnl = 0;
 		Accum = 0;
 		enable_timer = 0;
 		incr_chnnl = 0;
@@ -74,71 +73,71 @@ module IR_SENSOR_PI_MATH (/*autoport*/
 
 		case (state)
 			IDLE:	if(go) begin
-				incr_chnnl = 0;
-				clr_chnnl = 1;
-				Accum = 0;
-				clr_timer = 0;	//need to verify
-				enable_timer = 1;
-				//enable PWM to selected IR sensor pair
+						incr_chnnl = 0;
+						clr_chnnl = 1;
+						Accum = 0;
+						clr_timer = 0;	//need to verify
+						enable_timer = 1;
+						//enable PWM to selected IR sensor pair
 
-				nxt_state = B;
+						nxt_state = B;
 
-			end else begin 
-				incr_chnnl = 0;
-				clr_chnnl = 0;
-				Accum = 0;
-				enable_timer = 0;
+					end else begin 
+						incr_chnnl = 0;
+						clr_chnnl = 0;
+						Accum = 0;
+						enable_timer = 0;
 
-				nxt_state = IDLE;
-			end
+						nxt_state = IDLE;
+					end
 
 			B:	if(timer < 4096) begin
-				enable_timer = 1;
-				clr_chnnl = 0;
+					enable_timer = 1;
+					clr_chnnl = 0;
 
-				nxt_state = B;
-			end else if(timer = 4096) begin
-				strt_cnv = 1;	//need to verify that
-				clr_chnnl = 0; 
-				enable_timer = 0;
+					nxt_state = B;
+				end else if(timer == 4096) begin
+					strt_cnv = 1;	//need to verify that
+					clr_chnnl = 0; 
+					enable_timer = 0;
 
-				nxt_state = C;
-			end
+					nxt_state = C;
+				end
 	
 			C:	if(cnv_cmplt == 0) begin
-				strt_cnv = 0;	//strt_cnv is knocked down right away. Verify that it triggers the conversion
-				
-				nxt_state = C;
-			end else begin
-				strt_cnv = 0; 
-				Accum_right_select = 1;
-				incr_chnnl = 1;	//increment chnnl counter
-				clr_timer = 1;	//set clear timer signal
-				enable_timer = 1;	//enable the timer
+					strt_cnv = 0;	//strt_cnv is knocked down right away. Verify that it triggers the conversion
+					
+					nxt_state = C;
+				end else begin
+					strt_cnv = 0; 
+					Accum_right_select = 1;
+					incr_chnnl = 1;	//increment chnnl counter
+					clr_timer = 1;	//set clear timer signal
+					enable_timer = 1;	//enable the timer
 
-				nxt_state = D;
-			end
+					nxt_state = D;
+				end
 
 			D:	if(timer < 32) begin
-				enable_timer = 1;
-				Accum_right_select = 0; //need to verify
-				incr_chnnl = 0;
+					enable_timer = 1;
+					Accum_right_select = 0; //need to verify
+					incr_chnnl = 0;
 
-				nxt_state = D;
-			end else if(timer == 322) begin
-				enable_timer = 1;
-				strt_cnv = 1;	//need to verify
-				Accum_right_select = 0;
-				incr_chnnl = 0;
+					nxt_state = D;
+				end else if(timer == 322) begin
+					enable_timer = 1;
+					strt_cnv = 1;	//need to verify
+					Accum_right_select = 0;
+					incr_chnnl = 0;
 
-				nxt_state = E;
-			end
+					nxt_state = E;
+				end
 
 			E: if(cnv_cmplt == 0) begin
 					strt_cnv = 0;
 
 					nxt_state = E;
-			end else begin 
+				end else begin 
 					strt_cnv = 0;
 					Accum_left_select = 1;
 					incr_chnnl = 1;	//increment chnnl counter
@@ -146,21 +145,23 @@ module IR_SENSOR_PI_MATH (/*autoport*/
 
 
 					nxt_state = F;
-			end
+				end
 
 			F:	if(chnnl < 6) begin
 					enable_timer = 1;	//enable the timer
 					//enable PWM to selected IR sensor pair. Need to verify
 
 					nxt_state = B;
-				else if(chnnl == 6) begin
+				end else if(chnnl == 6) begin
 					//start doing calculation in ALU
 
 
 
-					nxt_state = A;
+					nxt_state = IDLE;
 				end
-			end
+
+				default:	nxt_state = IDLE;
+		endcase
 	end
 
 	PWM8 PWM8_enable_IR(/*autoport*/
