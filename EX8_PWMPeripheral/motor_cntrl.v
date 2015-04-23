@@ -11,7 +11,7 @@
 //
 //
 //==================================================================================================
-module PWM_architecture1 (/*autoport*/
+module motor_cntrl (/*autoport*/
 //output
 			fwd_lft,
 			rev_lft,
