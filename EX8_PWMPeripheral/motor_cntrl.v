@@ -1,7 +1,7 @@
 //==================================================================================================
 //  Filename      : motor_cntrl.v
 //  Created On    : 2015-02-23 10:52:27
-//  Last Modified : 2015-02-28 17:51:45
+//  Last Modified : 2015-04-23 14:57:42
 //  Revision      : 
 //  Author        : Zexi Liu
 //  Company       : UW-Madison
@@ -23,7 +23,7 @@ module motor_cntrl (/*autoport*/
 			clk,
 			rst_n);
 
-	output [9:0] fwd_lft, rev_lft, fwd_rht, rev_rht;
+	output fwd_lft, rev_lft, fwd_rht, rev_rht;
 	input [10:0] lft, rht;
 	input clk,rst_n;
 
