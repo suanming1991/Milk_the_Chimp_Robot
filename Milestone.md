@@ -14,3 +14,4 @@ Please put your progress in here.
 
 ## 4/23/2015 Zexi
 1. Wrote wiki for motor_cntrl.
+2. Updated README.MD. Linked wiki for motor_cntrl module
