@@ -6,4 +6,5 @@ Please put your progress in here.
 2. Generated 3 issues.
 3. Modified README.MD
 
-
+## 4/22/2015 Zexi & Shiyi
+1. Finished drawing 2 digital core FSM diagrams.
