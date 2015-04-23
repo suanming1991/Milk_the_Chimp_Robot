@@ -8,3 +8,6 @@ Please put your progress in here.
 
 ## 4/22/2015 Zexi & Shiyi
 1. Finished drawing 2 digital core FSM diagrams.
+
+## 4/22/2015 Shiyi
+1. Finished command processing FSM. Not test it yet.
