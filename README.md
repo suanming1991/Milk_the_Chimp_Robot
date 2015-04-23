@@ -73,7 +73,7 @@ The system is divided into several modules. The description of each is listed be
   <tr align="center">
     <td>Motor Control</td>
     <td>sends out PWM signal to control motor</td>
-    <td><a href="https://github.com/suanming1991/Milk_the_Chimp_Robot/wiki/motor_cntrl">Visit our HTML tutorial</a></td>
+    <td><a href="https://github.com/suanming1991/Milk_the_Chimp_Robot/wiki/motor_cntrl">wiki</a></td>
   </tr>
 </table>
 
