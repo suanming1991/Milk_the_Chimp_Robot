@@ -1,0 +1,18 @@
+Ps: cmd_rdy is rdy in the UART_rx
+Receiver: UART_RX
+Input:
+Clk, rst_n
+RX: data get from BLE112 (the blue box on the right)
+clr_rdy: asserted to knock down the cmd_rdy signal. 
+Output:
+rdy : asserted when a byte has been received 
+cmd[7:0]: byte received (serves as command to follower)
+
+Transmitting:
+Input: 
+clk, rst_n
+trmt: assert for 1 clock to initiate transmission
+tx_data[7:0]: byte to transmit
+Output:
+TX: data output
+tx_done: Asserted when byte is done transmitting, Stays high (tx_done = 1) still next  byte       transmitting; 
