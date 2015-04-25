@@ -204,7 +204,7 @@ module A2D_intf (/*autoport*/
 		end else if(load == 1) begin
 			bit_cnt <= 0;
 		end else if({load,shift} == 2'b01) begin
-			bit_cnt = bit_cnt + 1;
+			bit_cnt <= bit_cnt + 1;
 		end else begin 
 			bit_cnt <= bit_cnt;
 		end

@@ -1,0 +1,29 @@
+always_comb
+  begin
+  	case (chnnl_cnt)
+  	    3'b000 : begin
+  	    	chnnl = 3'b001;
+  	    	IR_enables = 3'b100;
+  	    end
+  	    3'b001 : begin
+  	    	chnnl = 3'b000;
+  	    	IR_enables = 3'b100;
+  	    end
+  	    3'b010 : begin
+  	    	chnnl = 3'b100;
+  	    	IR_enables = 3'b010;
+  	    end
+  	    3'b011 : begin
+  	    	chnnl = 3'b010;
+  	    	IR_enables = 3'b010;
+  	    end
+  	    3'b100 : begin
+  	    	chnnl = 3'b011;
+  	    	IR_enables = 3'b001;
+  	    end
+  	    3'b101 : begin
+  	    	chnnl = 3'b111;
+  	    	IR_enables = 3'b001;
+  	    end
+  		//default : ;
+  	endcase
