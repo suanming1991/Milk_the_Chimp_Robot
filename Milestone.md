@@ -17,13 +17,13 @@ Please put your progress in here.
 2. Updated README.MD. Linked wiki for motor_cntrl module
 
 ## 4/24/2015 
-Hua
+### Hua
 1. Finished wiki for Barcode_reader.
 
-Zexi
+### Zexi
 1. Fixed bugs presented in UART.
 2. Created auto test script for waveform generation.
 
-Shiyi
+### Shiyi
 1. Finished command processing FSM tb. Test not passed yet
 
