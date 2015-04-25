@@ -1,3 +1,16 @@
+//==================================================================================================
+//  Filename      : follower.v
+//  Created On    : 2015-04-23 22:50:19
+//  Last Modified : 2015-04-23 22:50:20
+//  Revision      : 
+//  Author        : Zexi Liu
+//  Company       : ECE Department, University of Wisconsin–Madison
+//  Email         : zliu79@wisc.edu
+//
+//  Description   : 
+//
+//
+//==================================================================================================
 module Follower(clk,RST_n,led,a2d_SS_n,SCLK,MISO,MOSI,rev_rht,
                 rev_lft,fwd_rht,fwd_lft,IR_in_en,IR_mid_en,IR_out_en,
 				in_transit,OK2Move,buzz,buzz_n,BC,RX);

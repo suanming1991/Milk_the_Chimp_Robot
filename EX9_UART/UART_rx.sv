@@ -1,7 +1,7 @@
 //==================================================================================================
 //  Filename      : UART_rx.sv
 //  Created On    : 2015-03-01 21:10:48
-//  Last Modified : 2015-03-24 22:46:22
+//  Last Modified : 2015-04-24 19:02:50
 //  Revision      : 
 //  Author        : Zexi Liu
 //  Company       : University of Wisconsin-Madison
@@ -76,22 +76,24 @@ module UART_rx (/*autoport*/
 				nxt_state = IDENTIFY;
 			end else if(baud_cnt == 1302) begin 
 				load = 0;
-				baud_id = 0;
+				baud_id = 1;
 				receiving = 1; //need to verify
 				nxt_state = RECEIV;
 			end
 
-			RECEIV:	if(bit_cnt < 8) begin
+			RECEIV:	if(bit_cnt < 9) begin
+				baud_id = 0;
 				idle_state = 0;
 				receiving = 1;
 				load = 0;
 				nxt_state = RECEIV;
-			end else if(bit_cnt == 8) begin
+			end else if(bit_cnt == 9) begin
+				baud_id = 0;
 				idle_state = 1;
 				receiving = 0;
 				nxt_state = IDLE;
 			end
-		
+
 			default :	nxt_state = IDLE;
 		endcase
 	end
@@ -130,7 +132,7 @@ module UART_rx (/*autoport*/
 			cmd <= 0;
 		end else if(load == 1) begin
 			cmd <= 8'b0000_0000;
-		end else if({load,shift} == 2'b01) begin
+		end else if({load,shift} == 2'b01 && (bit_cnt < 8)) begin
 			cmd <= ((cmd >> 1) | {RX,7'b000_0000});
 		end else begin
 			cmd <= cmd;

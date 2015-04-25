@@ -1,0 +1,46 @@
+# Outputs
+<UL>
+  <LI> <A HREF="#fwd_lft">fwd_lft</A>
+  <LI> <A HREF="#assignments">rev_lft</A>
+  <LI> <A HREF="#exams">fwd_rht</A>
+  <LI> <A HREF="#schedule">rev_rht</A>
+</UL>
+
+# Inputs
+* lft[10:0]
+* rht[10:0]
+* clk, rst_n
+
+# Wires
+* mag_lft[9:0]
+* mag_rht[9:0]
+* pwm_signal_lft[9:0]
+* pwm_signal_rht[9:0]
+
+***
+The motor controller receives a signed 11-
+bit number for both right and left motors.
+This will be converted in the motor
+controller to sign/magnitude and used to
+generate the PWM controls to the actual
+motor driver chips (ZXBM5210)
+
+![](https://github.com/suanming1991/Milk_the_Chimp_Robot/blob/master/imgs/motor_cntrl_in_big_pic.PNG)
+
+![](https://github.com/suanming1991/Milk_the_Chimp_Robot/blob/911ff72c5902d16299d4fd7e5f8974de2168401c/imgs/motor_cntrl3.PNG)
+
+***
+### lft[10:0]
+
+<!-- <H3><A NAME="toc">Links within this web page</A></H3> -->
+<UL>
+  <LI> <A HREF="#handouts">Handouts</A>
+  <LI> <A HREF="#assignments">Assignments</A>
+  <LI> <A HREF="#exams">Examinations and Grading</A>
+  <LI> <A HREF="#schedule">Course Schedule</A>
+</UL>
+
+<H3><A NAME="fwd_lft">fwd_lft</A></H3>
+<H3><A NAME="rev_lft">rev_lft</A></H3>
+<H3><A NAME="fwd_rht">fwd_rht</A></H3>
+<H3><A NAME="rev_rht">rev_rht</A></H3>
