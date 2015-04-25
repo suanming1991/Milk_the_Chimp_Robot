@@ -1,7 +1,7 @@
 //==================================================================================================
 //  Filename      : FSM_CM.sv
 //  Created On    : 2015-04-22 12:10:58
-//  Last Modified : 2015-04-22 16:24:42
+//  Last Modified : 2015-04-24 22:33:18
 //  Revision      : 
 //  Author        : milk_the_chimp, by Hua Shao, Shiyi Zhou, Zexi Liu
 //  Company       : ECE Department, University of Wisconsin–Madison
@@ -25,8 +25,8 @@ module FSM_CM (
 	ID_vld,	
 	OK2Move  
 );
-  output clr_ID_vld; // used to knock down ID_vld once station ID digested
-  output clr_cmd_rdy; // used to knock down cmd_rdy signal after command processed
+  output logic clr_ID_vld; // used to knock down ID_vld once station ID digested
+  output logic clr_cmd_rdy; // used to knock down cmd_rdy signal after command processed (ie. after cmd_rdy)
   output buzz,buzz_n; // optional piezo buzzer
   output logic go;	// Go signal to motion controller
   output logic in_transit; // forms enable to proximity sensor
@@ -42,6 +42,7 @@ module FSM_CM (
   logic [7:0] ID_reg;   //register use to store the value of ID read from BC unit
   logic set_in_transit; //if is 1, set the in_transit flop, if is 0, clear the in_transit flop
   logic capture_ID;  //if is 1, reload the ID into ID_reg
+  logic set_dest_ID;
   logic en; //use for buzz???
 
 typedef enum reg [2:0] {IDLE,Second,Third,Fourth,Fifth,Sixth} state_t;
@@ -61,6 +62,7 @@ always_comb begin : FSM_CM
         clr_cmd_rdy=0;
         set_in_transit=0;
         capture_ID=0;
+        set_dest_ID=0;
 
 		nxt_state = IDLE;
 
@@ -70,7 +72,7 @@ always_comb begin : FSM_CM
 				clr_cmd_rdy=1;
 				//set in_transit flop
 				set_in_transit = 1;
-                 
+                set_dest_ID=1;
 				//Capture ID 
                  capture_ID = 1;
 
@@ -82,9 +84,12 @@ always_comb begin : FSM_CM
 
 			Second:	if(cmd_rdy) begin
 				clr_cmd_rdy=1;
+				set_dest_ID=1;
+				set_in_transit = 1;
 
 				nxt_state = Sixth;
 			end else begin
+				set_in_transit = 1;
 
 				nxt_state = Third;
 			end
@@ -92,10 +97,12 @@ always_comb begin : FSM_CM
 
 			Third:	if(ID_vld) begin
 				clr_ID_vld=1;
+				set_in_transit = 1;
 
 				nxt_state = Fourth;
 			end else begin
-				
+				set_in_transit = 1;
+
 				nxt_state = Second;
 			end
 
@@ -106,15 +113,17 @@ always_comb begin : FSM_CM
 
 				nxt_state = IDLE;
 			end else begin
+				set_in_transit = 1;
 
 				nxt_state = Second;
 			end
 
 			Fifth:	if(cmd[7:6]==2'b00/*stop command*/) begin
-				
+				set_in_transit = 1;
 				nxt_state = IDLE;
 			end else begin
-				
+
+				set_in_transit = 1;
 				nxt_state = Third;
 			end
 
@@ -124,10 +133,12 @@ always_comb begin : FSM_CM
                  set_in_transit = 1; 
                  //capture ID
                  capture_ID = 1; 
+                 set_dest_ID=1;
 
-				nxt_state = Sixth;
+				nxt_state = Second;
 			end else begin
-				
+
+				set_in_transit = 1;
 				nxt_state = Fifth;
 			end
 
@@ -160,7 +171,17 @@ always_ff @(posedge clk or negedge rst_n) begin : ID_ff
 		end
 	end
 
-assign dest_ID = cmd[5:0];
+//assign dest_ID = cmd[5:0];
+always_ff @(posedge clk or negedge rst_n) begin : Dest_ID_ff
+		if(~rst_n) begin
+			dest_ID <= 0;
+		end else if(cmd_rdy) begin
+			dest_ID <= cmd[5:0];
+		end else begin
+			dest_ID <= dest_ID;
+		end
+	end
+
 
 assign go =OK2Move & in_transit;
 assign en = ~OK2Move & in_transit;
