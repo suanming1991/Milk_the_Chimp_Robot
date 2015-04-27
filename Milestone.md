@@ -25,5 +25,8 @@ Please put your progress in here.
 2. Created auto test script for waveform generation.
 
 ### Shiyi
-1. Finished command processing FSM tb. Test not passed yet
+1. Finished command processing FSM tb. Test not passed yet.
 
+## 4/26/2015 Zexi
+1. Organized UART pictures for wiki.
+2. Updated README.md, and included right documentation links.
