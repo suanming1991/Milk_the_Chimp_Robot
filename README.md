@@ -68,7 +68,7 @@ The system is divided into several modules. The description of each is listed be
   <tr align="center">
     <td>UART</td>
     <td>Bluetooth UART module that receives signal from Bluegigia BLE module</td>
-    <td>NA</td>
+    <td><a href="https://github.com/suanming1991/Milk_the_Chimp_Robot/wiki/UART">wiki</a></td>
   </tr>
   <tr align="center">
     <td>Motor Control</td>
