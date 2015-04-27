@@ -53,17 +53,17 @@ The system is divided into several modules. The description of each is listed be
   <tr align="center">
     <td>A2D interface</td>
     <td>Interface that changes analog signal to digital counterpart</td>
-    <td>NA</td>
+    <td><a href="https://github.com/suanming1991/Milk_the_Chimp_Robot/wiki/A2D_Interface">wiki</a></td>
   </tr>
   <tr align="center">
     <td>Digital Core</td>
     <td>Core function of the robot which does major calculation/logic processing</td>
-    <td>NA</td>
+    <td><a href="https://github.com/suanming1991/Milk_the_Chimp_Robot/wiki/Digital_Core">wiki</a></td>
   </tr>
   <tr align="center">
     <td>Barcode Reader</td>
     <td>Reader that reads the barcode at the station to stop</td>
-    <td>NA</td>
+    <td><a href="https://github.com/suanming1991/Milk_the_Chimp_Robot/wiki/Barcode_Reader">wiki</a></td>
   </tr>
   <tr align="center">
     <td>UART</td>
