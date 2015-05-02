@@ -1,0 +1,54 @@
+read_file -format sverilog follower.sv
+
+current_design follower
+
+puts "setting constraints"
+
+# clock frequency 500MHz
+create_clock -name "clk" -period 2 -waveform { 0 1 } { clk }
+
+set_dont_touch_network [find port clk]
+
+set prim_inputs [remove_from_collection [all_inputs] [find port clk]]
+
+#set input delay 0.5 ns
+set_input_delay -clock clk 0.5 [copy_collection $prim_inputs]
+/*set_input_delay -clock clk 0.5 [all_outputs]*/
+
+#set output delay 0.5ns
+set_output_delay -clock clk 0.5 [all_outputs]
+
+#Drive strength of inputs
+set_driving_cell -lib_cell ND2D2BWP -library tcbn401pbwptc $prim_inputs
+
+#define 0.1pf load
+set_load 0.1 [all_outputs]
+
+# TSMC32K_lowk_Conservative
+set_wire_load_model -name TSMC32K_Lowk_Conservative\ -library tcbn40lpbwptc
+
+#set max 
+set_max_transition 0.15 [current_design]
+
+#set clock uncertainty
+set_clock_uncertainty 0.15 clk
+
+
+
+#?????????????
+set_fix_hold clk
+
+# why high, not medium??
+compile -map_affect high
+
+# produce a min_delay
+report_timing -delay min
+
+#produces a max_delay 
+report_timing -delay max
+
+#produce an area report
+report_area > area.txt
+
+#writeout gate level
+write -format verilog follower -output follower.vg 
