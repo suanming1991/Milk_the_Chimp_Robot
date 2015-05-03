@@ -1,7 +1,7 @@
 //==================================================================================================
 //  Filename      : motion_cntrl.sv
 //  Created On    : 2015-04-22 14:54:29
-//  Last Modified : 2015-05-03 14:33:22
+//  Last Modified : 2015-05-03 17:32:12
 //  Revision      : 
 //  Author        : Zexi Liu
 //  Company       : ECE Department, University of Wisconsin–Madison
@@ -398,13 +398,16 @@ module motion_cntrl(/*autoport*/
 				end else begin 
 					enable_Icomp_timer = 0;
 
-					src1sel = ALU_SEL_ITERM;
-					src0sel = ALU_SEL_INTGRL;
+					//src1sel = ALU_SEL_ITERM;
+					//src0sel = ALU_SEL_INTGRL;
+					src1sel = ALU_SEL_ERROR_SIGN_EXTND;
+					src0sel = ALU_SEL_PTERM;
 					multiply = 1;
 					sub = 0;
 					mult2 = 0;
 					mult4 = 0;
-					saturate = 1;
+					//saturate =1;
+					saturate =0;
 
 					dst2pcomp_complt = 1;
 
@@ -420,7 +423,7 @@ module motion_cntrl(/*autoport*/
 				sub = 1;
 				mult2 = 0;
 				mult4 = 0;
-				saturate = 1;
+				saturate = 0;
 
 				nxt_state = RHT_REG;
 			end
@@ -458,7 +461,7 @@ module motion_cntrl(/*autoport*/
 				dst2lft_reg_complt = 1;
 
 				src1sel = ALU_SEL_ACCUM;
-				src0sel = ALU_SEL_PCOMP;
+				src0sel = ALU_SEL_ICOMP;
 				multiply =0;
 				sub = 0;
 				mult2 = 0;
@@ -566,8 +569,8 @@ module motion_cntrl(/*autoport*/
 	.saturate(saturate));
 
 	/* All ALU input flip flops */
-	assign Pterm = 14'h3680;
-	assign Iterm = 12'h500;
+	assign Pterm = 14'h37e0;
+	assign Iterm = 12'h380;
 
 	/*	flip flop store value of Accum */
 	always_ff @(posedge clk or negedge rst_n) begin : proc_dst2accum
