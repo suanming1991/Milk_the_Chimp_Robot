@@ -37,3 +37,13 @@ Please put your progress in here.
 
 ### Hua
 1. Finished wiki pages. Detailed descriptions and in-text links not completed yet.
+
+## 5/3/2015
+### Zexi
+1. Finished ```motion_cntrl.sv```. Test passed with ```check_math.pl```. Note that results sometimes vary at LSB by 1.
+
+### Hua
+1. Finished synthesis for ```UART_rx```. However, synthesis is pending due to inconsistency in naming with Shiyi's testing modules. Request to reevaluate her work.
+
+### Shiyi
+1. Discovered how ```check_math.pl``` can generate output files which are used for ```motion_cntrl``` testing.
