@@ -1,7 +1,7 @@
 //==================================================================================================
 //  Filename      : IR_SENSOR_PI_MATH.sv
 //  Created On    : 2015-04-22 14:54:29
-//  Last Modified : 2015-04-27 11:20:09
+//  Last Modified : 2015-04-29 10:40:09
 //  Revision      : 
 //  Author        : Zexi Liu
 //  Company       : ECE Department, University of Wisconsin–Madison
@@ -53,7 +53,7 @@ module IR_SENSOR_PI_MATH (/*autoport*/
 	logic clr_chnnl_counter;	//set to clr_chnnl_counter
 								//also I am going to use it to clear accum_ff for now
 
-	logic PWM_output;	//need to instantiate PWM8 module, this is the output
+	logic PWM_output8;//need to instantiate PWM8 module, this is the output
 	logic [7:0] PWM_duty_cycle;	//PWM duty cycle. Set to be a constant 0x8C
 
 	logic [15:0] dst;	//should it be signed?
@@ -76,6 +76,11 @@ module IR_SENSOR_PI_MATH (/*autoport*/
 	logic dst2rht_reg_complt;//assert to assign dst to rht_reg
 	logic dst2lft_reg_complt;//assert to assign dst to lft_reg
 
+	logic [1:0] int_dec;	//intgrl happens every four cycles. This counter keeps track of that
+	logic enable_int_dec;	//enable int_dec
+	logic Icomp_timer;	//a one bit timer that allows Icomp multiplication to last two cycles
+	logic enable_Icomp_timer;	//enable Icomp_timer
+
 	typedef enum reg [3:0] {IDLE,B,C,D,E,F,INTEGRAL,ICOMP,PCOMP,ACCUMCALC,RHT_REG,ACCUMCALC2,LFT_REG} state_t;
 	state_t state, nxt_state;
 
@@ -95,6 +100,7 @@ module IR_SENSOR_PI_MATH (/*autoport*/
 		Accum_left_select = 0;
 		clr_timer = 0;
 		clr_chnnl_counter = 0;
+		enable_int_dec = 0;
 
 		nxt_state = IDLE;
 
@@ -189,19 +195,77 @@ module IR_SENSOR_PI_MATH (/*autoport*/
 					nxt_state = B;
 				end else if(chnnl_counter == 6) begin
 					//start doing calculation in ALU
-
+					enable_timer = 0;
 
 
 					nxt_state = INTEGRAL;
 				end
 
-				default:	nxt_state = IDLE;
+			INTEGRAL:	
+				dst2intgrl_complt = &int_dec;
+				enable_int_dec = 1;
+				enable_Icomp_timer = 1;
+
+				nxt_state = ICOMP;
+			ICOMP:
+				if(Icomp_timer != 0) begin
+					enable_Icomp_timer = 1;
+
+					nxt_state = ICOMP;
+				end else begin 
+					enable_Icomp_timer = 1;
+
+					nxt_state = Pcomp;
+				end
+
+			PCOMP:
+				if(Icomp_timer != 0) begin
+					enable_Icomp_timer = 1;
+
+					nxt_state = PCOMP;
+				end else begin 
+					enable_Icomp_timer = 0;
+
+					nxt_state = ACCUMCALC;
+				end
+
+			ACCUMCALC:
+				dst2accum_complt = 1;
+
+				nxt_state = RHT_REG;
+
+			RHT_REG:
+				dst2rht_reg_complt = 1;
+
+				nxt_state = ACCUMCALC2;
+
+			ACCUMCALC2:
+				dst2accum_complt = 1;
+
+				nxt_state = LFT_REG;
+
+			LFT_REG:
+				dst2lft_reg_complt = 1;
+
+				nxt_state = IDLE;
+
+			default:	nxt_state = IDLE;
 		endcase
+	end
+
+	always_ff @(posedge clk or negedge rst_n) begin : proc_Icomp_timer
+		if(~rst_n) begin
+			Icomp_timer <= 0;
+		end else if(enable_Icomp_timer == 1) begin
+			Icomp_timer <= Icomp_timer + 1;
+		end else begin
+			Icomp_timer <= 0;
+		end
 	end
 
 	PWM8 PWM8_enable_IR(/*autoport*/
 //output
-			.PWM_sig(PWM_output),
+			.PWM_sig(PWM_output8;
 //input
 			.duty(PWM_duty_cycle),
 			.clk(clk),
@@ -212,11 +276,11 @@ module IR_SENSOR_PI_MATH (/*autoport*/
 	/* enable IR sensor pairs with chnnl_counter counter as selection, see the backside of FSM */
 	assign {IR_in_en, IR_mid_en, IR_out_en} =
 	//	/* outer pair is selected */
-		(chnnl_counter[2:1] == 2'b10)?	{2'b00, go&PWM_output}:
+		(chnnl_counter[2:1] == 2'b10)?	{2'b00, go&PWM_output8;
 		/* middle pair is selected */
-		(chnnl_counter[2:1] == 2'b01)?	{1'b0, go&PWM_output, 1'b0}:
+		(chnnl_counter[2:1] == 2'b01)?	{1'b0, go&PWM_output8;1'b0}:
 		/* inner pair is selected */
-		(chnnl_counter[2:1] == 2'b00)?	{go&PWM_output, 2'b00}:
+		(chnnl_counter[2:1] == 2'b00)?	{go&PWM_output8;2'b00}:
 		3'b000; 
 
 	/* assign chnnl based on the chnnl_counter. chnnl is the same as ADC channel addr.
@@ -309,7 +373,8 @@ module IR_SENSOR_PI_MATH (/*autoport*/
 	localparam PTERM  = 3'b100;
 
 	always_comb begin : proc_update_Accum	
-
+		if (Accum_calc_enabled)
+		// need to add a condition to initiate Error calculation
 		case (chnnl_counter)
 			0	:	begin 
 				src1sel = ACCUM;
@@ -370,7 +435,7 @@ module IR_SENSOR_PI_MATH (/*autoport*/
 				sub = 1;
 				mult2 = 0;
 				mult4 = 0;
-				saturate = 0;
+				saturate = 1;	//need to verify
 			end
 
 			default : 
@@ -383,6 +448,7 @@ module IR_SENSOR_PI_MATH (/*autoport*/
 				saturate = 0;
 		endcase
 	
+		else 
 	end
 
 	/*	flip flop store value of Accum */
@@ -398,6 +464,16 @@ module IR_SENSOR_PI_MATH (/*autoport*/
 		end
 	end
 
+	/* timer for intgrl */
+	always_ff @(posedge clk or negedge rst_n) begin : proc_int_dec
+		if(~rst_n) begin
+			int_dec <= 0;
+		end else if(enable_int_dec == 1) begin
+			int_dec <= int_dec + 1;
+		end else begin
+			int_dec <= int_dec;
 
+		end
+	end
 
 endmodule
