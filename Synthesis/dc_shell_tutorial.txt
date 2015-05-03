@@ -1,0 +1,9 @@
+//open up design vision
+
+open up xming from start menu 
+type design_vision
+
+
+//compile ALU.dc
+
+source ALU.dc
